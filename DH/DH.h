@@ -3,6 +3,7 @@
 
 #include<stdlib.h>
 #include<openssl/evp.h>
+#include <openssl/dh.h>
 
 EVP_PKEY* generate_pg();
 EVP_PKEY* generate_user(EVP_PKEY* pg);
