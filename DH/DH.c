@@ -33,3 +33,18 @@ EVP_PKEY* generate_user(EVP_PKEY* pg)
     return USER;
 }
 
+unsigned char* generate_secret(EVP_PKEY* ALICE, EVP_PKEY* BOB, size_t *secret_len)
+{
+    EVP_PKEY_CTX *ctx_exchange;
+
+    ctx_exchange = EVP_PKEY_CTX_new(ALICE, NULL); // ctx_exchange에 ALICE의 공개키, 비밀키를 집어넣음
+    EVP_PKEY_derive_init(ctx_exchange); //초기화
+    EVP_PKEY_derive_set_peer(ctx_exchange, BOB); // ctx_exchange에 BOB의 공개키를 집어넣음
+    EVP_PKEY_derive(ctx_exchange,NULL,secret_len); // secret_len 길이 지정
+
+    unsigned char* secret = malloc(*secret_len); // 비밀키 변수 생성
+    EVP_PKEY_derive(ctx_exchange,secret,secret_len);
+    EVP_PKEY_CTX_free(ctx_exchange);
+
+    return secret;
+}
