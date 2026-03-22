@@ -46,3 +46,15 @@ unsigned char* generate_secret(EVP_PKEY* ALICE, EVP_PKEY* BOB, size_t *secret_le
 
     return secret;
 }
+
+unsigned char* send_pk(EVP_PKEY *key, int *len)
+{
+    *len = i2d_PUBKEY(key,NULL);
+
+    unsigned char* buf = malloc(*len);
+    unsigned char* tmp = buf;
+
+    i2d_PUBKEY(key, &tmp);
+
+    return buf;
+}
