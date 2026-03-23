@@ -58,3 +58,12 @@ unsigned char* send_pk(EVP_PKEY *key, int *len)
 
     return buf;
 }
+
+// byte로 변환한 키값과 키값의 길이를 넣는다.
+EVP_PKEY* recv_pk(unsigned char* data, int len)
+{
+    const unsigned char* tmp = data;
+    EVP_PKEY* key = d2i_PUBKEY(NULL, &tmp, len);
+    
+    return key;
+}
