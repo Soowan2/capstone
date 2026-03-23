@@ -67,3 +67,23 @@ EVP_PKEY* recv_pk(unsigned char* data, int len)
     
     return key;
 }
+
+unsigned char* send_pg(EVP_PKEY *pg,int *len)
+{
+    *len = i2d_KeyParams(pg,NULL);
+
+    unsigned char* buf = malloc(*len);
+    unsigned char* tmp = buf;
+
+    i2d_KeyParams(pg,&tmp);
+
+    return buf;
+}
+
+EVP_PKEY *recv_pg(unsigned char* data, int len)
+{
+    const unsigned char* tmp = data;
+    EVP_PKEY* pg = d2i_KeyParams(EVP_PKEY_DH, NULL, &tmp, len);
+
+    return pg;
+}
