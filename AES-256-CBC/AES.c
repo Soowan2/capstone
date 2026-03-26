@@ -35,3 +35,21 @@ unsigned char* aes_enc(unsigned char *key, unsigned char *plaintext, int plainte
 
     return result;
 }
+
+unsigned char* aes_dec(unsigned char* key, unsigned char* ciphertext, int ciphertext_len, int *plaintext_len)
+{
+    unsigned char *result = malloc(ciphertext_len);
+    unsigned int result_len;
+    unsigned int final_len;
+    unsigned char* iv = ciphertext; 
+    
+    EVP_CIPHER_CTX *ctx = EVP_CIPHER_CTX_new();
+    EVP_DecryptInit_ex(ctx,EVP_aes_256_cbc(),NULL,key,iv);
+    EVP_DecryptUpdate(ctx, result, &result_len, ciphertext + 16, ciphertext_len - 16);
+    EVP_DecryptFinal_ex(ctx, result + result_len, &final_len); // 마지막 블록에서 패딩을 제외한 길이
+    EVP_CIPHER_CTX_free(ctx);
+
+    *plaintext_len = result_len + final_len;
+
+    return result;
+}
