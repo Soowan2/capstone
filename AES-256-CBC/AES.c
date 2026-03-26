@@ -1,5 +1,4 @@
-#include<stdio.h>
-#include<openssl/evp.h>
+#include"AES.h"
 
 unsigned char* derive_aes_key(unsigned char *secret, size_t secret_len)
 {
@@ -15,7 +14,7 @@ unsigned char* derive_aes_key(unsigned char *secret, size_t secret_len)
     return result;
 }
 
-unsigned char* aes_enc(unsigned char *key, unsigned char *plaintext, int plaintext_len, int *cipertext_len)
+unsigned char* aes_enc(unsigned char *key, unsigned char *plaintext, int plaintext_len, int *ciphertext_len)
 {
     unsigned char iv[16];
     RAND_bytes(iv, 16);

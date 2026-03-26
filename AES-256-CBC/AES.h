@@ -3,6 +3,7 @@
 #include<stdio.h>
 #include<string.h>
 #include<openssl/evp.h>
+#include<openssl/rand.h>
 
 
 unsigned char* derive_aes_key(unsigned char *secret, size_t secret_len);
