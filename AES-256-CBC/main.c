@@ -22,7 +22,12 @@ int main()
     printf("\n");
 
     // 3. 암호화
-    char *message = "Hello NexSH!";
+    char *message = NULL;
+    size_t len = 0;
+
+    printf("메시지 입력: ");
+    getline(&message, &len, stdin);
+    message[strcspn(message, "\n")] = '\0'; 
     int ciphertext_len;
     unsigned char *encrypted = aes_enc(aes_key, (unsigned char*)message, strlen(message), &ciphertext_len);
 
